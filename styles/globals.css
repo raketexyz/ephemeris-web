@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+pre {
+    overflow-x: auto;
+}
+
+a[href] {
+    text-decoration: underline;
+}
+a.no-underline {
+    text-decoration-line: none;
+}
