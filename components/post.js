@@ -22,7 +22,6 @@ export default function Post({ session, id }) {
     const [delError, setDelError] = useState(null);
 
     const handleRemove = async () => {
-        if (!del) return setDel(true);
         deletePost(id, session.token)
             .then(_ => router.push("/"))
             .catch(e => setDelError(e));
@@ -35,12 +34,10 @@ export default function Post({ session, id }) {
         <Error error={delError} />
         <div className="self-center px-5 py-2 mt-5 rounded-lg bg-neutral-800
             shadow-xl max-w-prose w-full">
-            <div className="font-serif text-lg break-words flex flex-col">
+            <div className="font-serif break-words flex flex-col">
                 <div className="font-sans">
                     <div className="mt-1 tracking-tighter text-neutral-200">
-                        <Link href={`/user/${post.author}`}>
-                            {post.author}
-                        </Link>
+                        <Link href={`/user/${post.author}`}>{post.author}</Link>
                         <Separator />
                         {new Date(post.createdAt).toLocaleDateString()}
                         { post.updatedAt && <>
@@ -50,26 +47,22 @@ export default function Post({ session, id }) {
                         </>}
                         {session && session.user.username === post.author && <>
                             <Separator />
-                            <Link href={`/edit/${id}`}>
-                                <a className="tracking-tighter text-base">
-                                    edit
-                                </a>
-                            </Link>
+                            <Link href={`/edit/${id}`}>edit</Link>
                             <Separator />
                             { del ? <>
-                                <span className="text-base">really?</span>
+                                really?
                                 <Separator />
-                                <a className="cursor-pointer underline
-                                    text-base" onClick={() => setDel(false)}>
+                                <a className="cursor-pointer underline"
+                                    onClick={() => setDel(false)}>
                                     no
                                 </a>
                                 <Separator />
-                                <a className="cursor-pointer underline
-                                    text-base" onClick={handleRemove}>
+                                <a className="cursor-pointer underline"
+                                    onClick={handleRemove}>
                                     yes
                                 </a>
-                            </> : <a className="cursor-pointer underline
-                                text-base" onClick={handleRemove}>
+                            </> : <a className="cursor-pointer underline"
+                                onClick={() => setDel(true)}>
                                 delete
                             </a>}
                         </>}
