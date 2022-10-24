@@ -6,7 +6,7 @@ export default function PostCard({ id }) {
     const { post, isLoading, error } = usePost(id);
 
     if (error) return <Error error={error.message} />;
-    if (isLoading) return <Loading />
+    if (isLoading) return <></>;
     return (
         <div className="mx-auto px-2 py-1 max-w-xl my-5 bg-neutral-800 shadow-xl
                         rounded-lg break-words">
