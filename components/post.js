@@ -15,6 +15,7 @@ import 'highlight.js/styles/monokai-sublime.css';
 
 import { usePost, deletePost } from '/components/api';
 import { Loading, Error } from '/components/form';
+import Separator from '/components/separator';
 
 export default function Post({ session, id }) {
     const router = useRouter();
@@ -85,10 +86,6 @@ export default function Post({ session, id }) {
         </div>
 
     </>;
-}
-
-function Separator() {
-    return <span className="mx-1 text-neutral-300">&middot;</span>;
 }
 
 function Markdown({ text }) {

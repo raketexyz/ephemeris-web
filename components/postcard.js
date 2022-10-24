@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Loading, Error } from '/components/form';
+import { Error } from '/components/form';
 import { usePost } from '/components/api';
+import Separator from '/components/separator';
 
 export default function PostCard({ id }) {
     const { post, isLoading, error } = usePost(id);
@@ -22,15 +23,16 @@ export default function PostCard({ id }) {
                         </p>
                     </a>
                 </Link>
-                <div className="mt-1 text-sm tracking-tighter">
-                    <span className="text-neutral-400">&mdash;</span>
-                    <span className="ml-1 text-neutral-100">
-                        <Link href={`/user/${post.author}`}>{post.author}</Link>
-                    </span>
-                    <span className="ml-1 text-neutral-400">&middot;</span>
-                    <span className="ml-1 text-neutral-200">
-                        {new Date(post.createdAt).toLocaleDateString()}
-                    </span>
+                <div className="mt-1 text-sm text-neutral-200 tracking-tighter">
+                    <span className="text-neutral-400 mr-1">&mdash;</span>
+                    <Link href={`/user/${post.author}`}>{post.author}</Link>
+                    <Separator />
+                    {new Date(post.createdAt).toLocaleDateString()}
+                    { post.updatedAt && <>
+                        <Separator />
+                        last edited {new Date(post.updatedAt)
+                                .toLocaleDateString()}
+                    </>}
                 </div>
             </div>
         </div>
