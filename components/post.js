@@ -57,7 +57,7 @@ export default function Post({ session, id }) {
                             </Link>
                             <Separator />
                             { del ? <>
-                                really?
+                                <span className="text-base">really?</span>
                                 <Separator />
                                 <a className="cursor-pointer underline
                                     text-base" onClick={() => setDel(false)}>
