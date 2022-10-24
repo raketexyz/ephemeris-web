@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -31,6 +32,11 @@ export default function Post({ session, id }) {
     if (isLoading) return <Loading />;
 
     return <>
+        <Head>
+            <title>
+                {post.title} &middot; {post.author} &middot; ephemeris
+            </title>
+        </Head>
         <Error error={delError} />
         <div className="self-center px-5 py-2 mt-5 rounded-lg bg-neutral-800
             shadow-xl max-w-prose w-full">
