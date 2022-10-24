@@ -13,32 +13,23 @@ import rehypeStringify from 'rehype-stringify';
 import 'katex/dist/katex.css';
 import 'highlight.js/styles/monokai-sublime.css';
 
-import { usePost, deletePost } from '/components/api';
+import { deletePost } from '/components/api';
 import { Loading, Error } from '/components/form';
 import Separator from '/components/separator';
 
-export default function Post({ session, id }) {
+export default function Post({ session, post }) {
     const router = useRouter();
-    const { post, isLoading, error } = usePost(id);
     const [del, setDel] = useState(false);
-    const [delError, setDelError] = useState(null);
+    const [error, setError] = useState(null);
 
     const handleRemove = async () => {
-        deletePost(id, session.token)
+        deletePost(post.id, session.token)
             .then(_ => router.push("/"))
-            .catch(e => setDelError(e));
+            .catch(e => setError(e));
     }
 
-    if (error) return <Error error={error.message} />;
-    if (isLoading) return <Loading />;
-
     return <>
-        <Head>
-            <title>
-                {post.title} &middot; {post.author} &middot; ephemeris
-            </title>
-        </Head>
-        <Error error={delError} />
+        <Error error={error} />
         <div className="self-center px-5 py-2 mt-5 rounded-lg bg-neutral-800
             shadow-xl max-w-prose w-full">
             <div className="font-serif break-words flex flex-col">
@@ -84,7 +75,6 @@ export default function Post({ session, id }) {
                 <Markdown text={post.body} />
             </div>
         </div>
-
     </>;
 }
 
