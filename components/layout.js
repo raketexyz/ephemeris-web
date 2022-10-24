@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { useSession } from './api';
+import Separator from '/components/separator';
 
 export default function Layout({ children }) {
     return <div className="min-h-screen bg-neutral-900 flex flex-col">
@@ -18,11 +19,10 @@ export default function Layout({ children }) {
 function Footer() {
     return <div className="px-5 max-h-28 flex flex-col">
         <div className="min-w-full mt-5 mb-3 border-t border-neutral-400" />
-        <div className="text-neutral-200 min-w-full flex flex-wrap
-            justify-center mb-3">
-            <Link href="/about"><a className="max-w-fit">about</a></Link>
-            <span className="mx-1 text-neutral-300">&middot;</span>
-            <Link href="/privacy"><a className="max-w-fit">privacy</a></Link>
+        <div className="text-neutral-200 flex flex-wrap justify-center mb-3 overflow-clip">
+            <Link href="/about">about</Link>
+            <Separator />
+            <Link href="/privacy">privacy</Link>
         </div>
     </div>;
 }
@@ -42,27 +42,19 @@ function Header() {
     const session = useSession();
     if (!session) return (
         <div className="text-neutral-200 float-right">
-            <Link href="/login">
-                <a>login</a>
-            </Link>
-            <span className="mx-1 text-neutral-300">&middot;</span>
-            <Link href="/signup">
-                <a>sign&nbsp;up</a>
-            </Link>
+            <Link href="/login">login</Link>
+            <Separator />
+            <Link href="/signup">sign&nbsp;up</Link>
         </div>
     );
-    return <div className="text-neutral-200 float-right">
+    return <div className="text-neutral-200 float-right flex flex-wrap">
         hello,&nbsp;
-        <Link href={`/user/${session.user.username}`}><a>
+        <Link href={`/user/${session.user.username}`}>
             {session.user.username}
-        </a></Link>
-        <span className="mx-2">&middot;</span>
-        <Link href="/write"><a>
-            write
-        </a></Link>
-        <span className="mx-2">&middot;</span>
-        <Link href="/logout"><a>
-            logout
-        </a></Link>
+        </Link>
+        <Separator />
+        <Link href="/write">write</Link>
+        <Separator />
+        <Link href="/logout">logout</Link>
     </div>;
 }
