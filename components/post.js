@@ -59,17 +59,17 @@ export default function Post({ session, id }) {
                             { del ? <>
                                 really?
                                 <Separator />
-                                <a className="cursor-pointer underline"
-                                    onClick={() => setDel(false)}>
+                                <a className="cursor-pointer underline
+                                    text-base" onClick={() => setDel(false)}>
                                     no
                                 </a>
                                 <Separator />
-                                <a className="cursor-pointer underline"
-                                    onClick={handleRemove}>
+                                <a className="cursor-pointer underline
+                                    text-base" onClick={handleRemove}>
                                     yes
                                 </a>
-                            </> : <a className="cursor-pointer underline"
-                                onClick={handleRemove}>
+                            </> : <a className="cursor-pointer underline
+                                text-base" onClick={handleRemove}>
                                 delete
                             </a>}
                         </>}
