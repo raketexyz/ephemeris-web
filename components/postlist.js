@@ -36,7 +36,7 @@ function Page({ page, author }) {
     const { posts, isLoading, error } =
         usePosts(page * PAGE_SIZE, PAGE_SIZE, author);
 
-    if (isLoading) return <span>Loading</span>;
+    if (isLoading) return <></>;
     if (error) return <Error error={error.message} />;
     return posts.map(post => <PostCard key={post.id} id={post.id}/>);
 }
