@@ -28,8 +28,7 @@ export async function getServerSideProps(context) {
     const post = await fetch(
         `${process.env.INTERNAL_API_URL}post/${context.query.id}`
     )
-        .then(async res => res.ok ? res.json()
-            : Promise.reject())
+        .then(async res => res.ok ? res.json() : Promise.reject())
         .catch(() => {
             return null;
         });

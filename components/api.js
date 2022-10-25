@@ -148,6 +148,20 @@ module.exports = {
         })
             .then(async res => res.ok ? res
                 : Promise.reject(await res.text()));
+    },
+    updatePreferences: async (update, token) => {
+        return fetch(`${API_URL}preferences`, {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                update,
+                token,
+            }),
+        })
+            .then(async res => res.ok ? res
+                : Promise.reject(await res.text()));
     }
 };
 

@@ -27,7 +27,7 @@ module.exports = {
         name, value, onChange, autoComplete, disabled, placeholder, maxLength,
         minLength, required,
     }) {
-        const classes = "bg-neutral-800 px-1 outline-none rounded";
+        const classes = "bg-neutral-800 px-1 outline-none rounded w-full";
         return <textarea name={name} value={value} onChange={onChange}
                          autoComplete={autoComplete} disabled={disabled}
                          placeholder={placeholder} maxLength={maxLength}
