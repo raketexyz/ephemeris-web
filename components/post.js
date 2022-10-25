@@ -45,7 +45,7 @@ export default function Post({ session, post }) {
                         </>}
                         {session && session.user.username === post.author && <>
                             <Separator />
-                            <Link href={`/edit/${id}`}>edit</Link>
+                            <Link href={`/edit/${post.id}`}>edit</Link>
                             <Separator />
                             { del ? <>
                                 really?
