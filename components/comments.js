@@ -35,9 +35,12 @@ export default function Comments({ post, session }) {
             </div>
             { isLoading && <Loading /> }
 
-            { session && (
+            { session ? (
                 <Prompt session={session} update={add} post={post} />
-            ) }
+            ) : <div className="text-neutral-200 tracking-tighter">
+                <Link href="/login">log in</Link> or <Link href="/signup">
+                sign up</Link> to comment
+            </div> }
             { data && data.map(comments => comments.map(comment =>
                 <Comment key={comment.id} comment={comment} session={session}
                     remove={remove} />
