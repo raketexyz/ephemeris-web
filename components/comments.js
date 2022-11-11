@@ -73,6 +73,7 @@ function Prompt({ session, update, post }) {
         }, session.token)
             .then(comment => {
                 setMessage("");
+                setError(null);
                 update(comment);
             })
             .catch(e => setError(e))
