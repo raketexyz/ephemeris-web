@@ -4,6 +4,7 @@ import Head from 'next/head';
 
 import Post from '/components/post';
 import { Loading } from '/components/form';
+import Comments from '/components/comments';
 
 export default function PostPage({ session, post }) {
     const router = useRouter();
@@ -20,6 +21,7 @@ export default function PostPage({ session, post }) {
             <meta name="description" value={post.subtitle} />
         </Head>
         <Post post={post} session={session} />
+        <Comments post={post} session={session} />
     </>;
 }
 

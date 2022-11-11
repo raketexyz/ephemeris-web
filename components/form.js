@@ -48,8 +48,8 @@ module.exports = {
     Error: function({ error }) {
         return <>
             {error && (
-                <div className="text-gray-300 bg-red-400 px-2 py-1 rounded
-                    max-w-prose mx-auto overflow-hidden">
+                <div className="text-gray-300 bg-red-400 my-2 px-5 py-2 rounded
+                    max-w-prose mx-auto overflow-hidden font-bold">
                     { String(error) }
                 </div>
             )}

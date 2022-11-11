@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import useSWRInfinite from 'swr/infinite';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,6 +40,30 @@ module.exports = {
             error,
         };
     },
+    useComments: (post, limit) => {
+        const {
+            data,
+            error,
+            isValidating,
+            mutate,
+            size,
+            setSize,
+        } = useSWRInfinite(
+            pageIndex => `${API_URL}comments?post=${post}&offset=${pageIndex *
+                    limit ?? 10}&limit=${limit ?? 10}`,
+            fetcher,
+        );
+
+        return {
+            data,
+            isLoading: !error && !data,
+            error,
+            isValidating,
+            mutate,
+            size,
+            setSize,
+        };
+    },
     useSession: () => {
         const [token, setToken] = useState(null);
         const [data, setData] = useState(null);
@@ -54,7 +79,7 @@ module.exports = {
         }
 
         useEffect(() => {
-            if (!load || loading || !token) return;
+            if (!load || !token) return;
 
             setLoad(false);
             setLoading(true);
@@ -121,6 +146,20 @@ module.exports = {
             .then(async res => res.ok ? res.json()
                 : Promise.reject(await res.text()));
     },
+    postComment: async (comment, token) => {
+        return fetch(`${API_URL}comment`, {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                comment,
+                token,
+            })
+        })
+            .then(async res => res.ok ? res.json()
+                : Promise.reject(await res.text()));
+    },
     edit: async (id, post, token) => {
         return fetch(`${API_URL}edit`, {
             method: "post",
@@ -130,6 +169,20 @@ module.exports = {
             body: JSON.stringify({
                 id,
                 post,
+                token,
+            }),
+        })
+            .then(async res => res.ok ? res.json()
+                : Promise.reject(await res.text()));
+    },
+    editComment: async (comment, token) => {
+        return fetch(`${API_URL}comment`, {
+            method: "put",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                comment,
                 token,
             }),
         })
@@ -147,6 +200,19 @@ module.exports = {
             }),
         })
             .then(async res => res.ok ? res
+                : Promise.reject(await res.text()));
+    },
+    deleteComment: async (id, token) => {
+        return fetch(`${API_URL}comment/${id}`, {
+            method: "delete",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                token,
+            }),
+        })
+            .then(async res => res.ok ? res.json()
                 : Promise.reject(await res.text()));
     },
     updatePreferences: async (update, token) => {
