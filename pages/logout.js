@@ -9,10 +9,8 @@ export default function Logout({ session }) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    if (session === null)
-        router.push("/");
-
     useEffect(() => {
+        if (session === null) return router.push("/");
         if (!session || loading)
             return;
         setLoading(true);

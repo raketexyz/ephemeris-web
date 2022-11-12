@@ -31,8 +31,11 @@ class Write extends React.Component {
             });
     }
 
-    render() {
+    async componentDidMount() {
         if (this.props.session === null) this.props.router.push("/login");
+    }
+
+    render() {
         return <div>
             {!this.state.showForm && !this.state.error && <Loading />}
             <Error error={this.state.error} />
