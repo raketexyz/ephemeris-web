@@ -24,7 +24,8 @@ function Inner({ id, session }) {
     const {
         post: original,
         isLoading: origLoading,
-        error: origError
+        error: origError,
+        mutate,
     } = usePost(id);
     const [ post, setPost ] = useState(null);
     const [ error, setError ] = useState(null);
@@ -38,16 +39,23 @@ function Inner({ id, session }) {
             post,
             session.token,
         )
-            .then(post => router.push(`/post/${post.id}`))
+            .then(post => {
+                router.push(`/post/${post.id}`);
+                mutate(post, { populateCache: true, revalidate: false });
+            })
             .catch(e => {
                 setError(e);
                 setLoading(false);
             });
-    }
+    };
 
+    if (origError)
+        return <Error error={ origError.status === 404
+                ? "Post not found."
+                : origError.message } />;
     if (!error && origError) setError(error ?? origError.message);
     if (loading || origLoading) return <Loading />;
-    if (!original) {
+    if (!(original || origError)) {
         router.push("/");
         return <Loading />;
     }
