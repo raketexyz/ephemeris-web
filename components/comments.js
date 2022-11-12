@@ -86,7 +86,7 @@ function Prompt({ session, update, post }) {
         <Form onSubmit={handleSubmit}>
             <Input label="message:">
                 <TextArea name="message" onChange={handleInputChange}
-                    value={message} minLength={1} maxLength={140} required />
+                    value={message} minLength={1} required />
             </Input>
             <Button type="submit">comment!</Button>
         </Form>
@@ -127,9 +127,10 @@ function Comment({ comment, session, remove }) {
     if (loading) return <Loading />;
     return <div className="mx-auto px-5 py-2 max-w-xl my-5 bg-neutral-800
         shadow-xl rounded-lg break-words">
+        <Error error={error} />
         <div className="font-serif pl-2 text-neutral-100">
             { edit ? <>
-                <TextArea value={message} maxLength={140}
+                <TextArea value={message} minLength={1}
                     onChange={e => setMessage(e.target.value)} />
                 <span className="underline text-sm cursor-pointer"
                     onClick={save}>
