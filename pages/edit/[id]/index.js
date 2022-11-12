@@ -12,7 +12,7 @@ export default function Edit({ session }) {
     if (!router.query.id) {
         router.push("/");
         return <Loading />;
-    };
+    }
 
     if (session === null) router.push("/login");
 
@@ -21,10 +21,14 @@ export default function Edit({ session }) {
 
 function Inner({ id, session }) {
     const router = useRouter();
-    const { post: original, origLoading, origError } = usePost(id);
-    const [post, setPost] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const {
+        post: original,
+        isLoading: origLoading,
+        error: origError
+    } = usePost(id);
+    const [ post, setPost ] = useState(null);
+    const [ error, setError ] = useState(null);
+    const [ loading, setLoading ] = useState(false);
 
     const handleSubmit = async event => {
         event.preventDefault();
