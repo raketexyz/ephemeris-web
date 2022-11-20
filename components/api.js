@@ -78,7 +78,7 @@ export function getToken() {
 
 export function useSession() {
     const token = getToken();
-    const { data, error } = useSWR(
+    const { data, error, mutate } = useSWR(
         token && `${API_URL}session?token=${token}`,
         fetcher,
     );
@@ -88,6 +88,7 @@ export function useSession() {
     if (data) return {
         token,
         ...data,
+        mutate,
     };
 }
 

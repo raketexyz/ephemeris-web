@@ -10,7 +10,7 @@ export default function PostList({ author }) {
     const [ pages, setPages ] = useState(1);
     const { posts, isLoading, error } = usePosts(0, pages * PAGE_SIZE + 1, author);
 
-    return <>
+    return <div>
         { error && <Error error={error.message} /> }
 
         {[...Array(pages).keys()].map(i => (
@@ -29,7 +29,7 @@ export default function PostList({ author }) {
                 moar!
             </button>
         ))}
-    </>;
+    </div>;
 };
 
 function Page({ page, author }) {

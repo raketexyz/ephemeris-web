@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Form, Input, TextArea, Button, Loading, Error } from '/components/form';
+import {
+    Form, Input, TextArea, Button, Loading, Error, ActionText,
+} from '/components/form';
 import { useComments, postComment, deleteComment, editComment } from '/components/api';
 import Separator from '/components/separator';
 
@@ -100,17 +102,17 @@ function Comment({ comment, session, remove }) {
     const [edit, setEdit] = useState(false);
     const [message, setMessage] = useState();
 
-    const editButton = e => {
-        e.preventDefault();
-        if (!message) setMessage(comment.message);
-        setEdit(true);
-    };
-    const save = e => {
+    const handleSave = e => {
         e.preventDefault();
         if (loading) return;
+        if (!message) {
+            setEdit(false);
+            setError(null);
+            return;
+        }
         setLoading(true);
         editComment({ message, id: comment.id }, session.token)
-            .then(comment => {
+            .then(() => {
                 setError(null);
                 setEdit(false);
             })
@@ -129,17 +131,10 @@ function Comment({ comment, session, remove }) {
         shadow-xl rounded-lg break-words">
         <Error error={error} />
         <div className="font-serif pl-2 text-neutral-100">
-            { edit ? <>
-                <TextArea value={message} minLength={1}
-                    onChange={e => setMessage(e.target.value)} />
-                <span className="underline text-sm cursor-pointer"
-                    onClick={save}>
-                    save
-                </span>
-            </> : <>
-                { message ?? comment.message }
-            </>
-            }
+            { edit
+                ? <TextArea onChange={e => setMessage(e.target.value)}
+                    value={message ?? comment.message} minLength={1} />
+                : message ?? comment.message }
         </div>
         <div className="text-sm tracking-tighter mt-1 text-neutral-200">
             <span className="text-neutral-400 mr-1">&mdash;</span>
@@ -148,33 +143,23 @@ function Comment({ comment, session, remove }) {
             {new Date(comment.createdAt).toLocaleDateString()}
             { comment.updatedAt && <>
                 <Separator />
-                last edited {new Date(comment.updatedAt)
-                        .toLocaleDateString()}
+                last edited {new Date(comment.updatedAt).toLocaleDateString()}
             </> }
             { session && session.user.username === comment.author && <>
                 <Separator />
-                { edit || <>
-                    <a className="cursor-pointer underline" onClick={editButton}>
-                        edit
-                    </a>
-                    <Separator />
-                </> }
+                { edit
+                    ? <ActionText action={handleSave}>save</ActionText>
+                    : <ActionText action={() => setEdit(true)}>edit</ActionText> }
+                <Separator />
                 { del ? <>
                     really?
                     <Separator />
-                    <a className="cursor-pointer underline"
-                        onClick={() => setDel(false)}>
-                        no
-                    </a>
+                    <ActionText action={() => setDel(false)}>no</ActionText>
                     <Separator />
-                    <a className="cursor-pointer underline"
-                        onClick={handleRemove}>
-                        yes
-                    </a>
-                </> : <a className="cursor-pointer underline"
-                    onClick={() => setDel(true)}>
+                    <ActionText action={handleRemove}>yes</ActionText>
+                </> : <ActionText action={() => setDel(true)}>
                     delete
-                </a>}
+                </ActionText>}
             </>}
         </div>
     </div>;

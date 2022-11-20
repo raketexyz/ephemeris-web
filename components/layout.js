@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
-import { useSession } from './api';
+import { useSession, logout } from './api';
 import Separator from '/components/separator';
+import { ActionText } from '/components/form';
 
 export default function Layout({ children }) {
     return <div className="min-h-screen bg-neutral-900 flex flex-col">
@@ -40,6 +41,14 @@ function Heading() {
 
 function Header() {
     const session = useSession();
+
+    const handleLogout = e => {
+        e.preventDefault();
+        logout(session.token)
+            .then(() => session.mutate())
+            .catch(e => console.error(e));
+    };
+
     if (!session) return (
         <div className="text-neutral-200 float-right">
             <Link href="/login?return">login</Link>
@@ -55,6 +64,6 @@ function Header() {
         <Separator />
         <Link href="/write">write</Link>
         <Separator />
-        <Link href="/logout">logout</Link>
+        <ActionText action={handleLogout}>logout</ActionText>
     </div>;
 }

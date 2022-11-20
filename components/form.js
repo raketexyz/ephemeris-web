@@ -54,5 +54,14 @@ module.exports = {
                 </div>
             )}
         </>;
+    },
+    ActionText: function({ action, children }) {
+        const onKeyDown = e => {
+            if (e.key === "Enter") action();
+        };
+        return <span className="cursor-pointer underline" tabIndex="0"
+            onKeyDown={onKeyDown} onClick={action}>
+            { children }
+        </span>;
     }
 };

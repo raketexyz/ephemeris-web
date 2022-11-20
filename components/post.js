@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -14,7 +13,7 @@ import 'katex/dist/katex.css';
 import 'highlight.js/styles/monokai-sublime.css';
 
 import { deletePost } from '/components/api';
-import { Loading, Error } from '/components/form';
+import { Loading, Error, ActionText } from '/components/form';
 import Separator from '/components/separator';
 
 export default function Post({ session, post }) {
@@ -50,19 +49,12 @@ export default function Post({ session, post }) {
                             { del ? <>
                                 really?
                                 <Separator />
-                                <a className="cursor-pointer underline"
-                                    onClick={() => setDel(false)}>
-                                    no
-                                </a>
+                                <ActionText action={() => setDel(false)}>no</ActionText>
                                 <Separator />
-                                <a className="cursor-pointer underline"
-                                    onClick={handleRemove}>
-                                    yes
-                                </a>
-                            </> : <a className="cursor-pointer underline"
-                                onClick={() => setDel(true)}>
+                                <ActionText action={handleRemove}>yes</ActionText>
+                            </> : <ActionText action={() => setDel(true)}>
                                 delete
-                            </a>}
+                            </ActionText>}
                         </>}
                     </div>
                     <div className="text-neutral-100 font-bold text-3xl">
