@@ -118,8 +118,8 @@ function Markdown({ text }) {
     }, [text]);
 
     return rendered ? (
-        <p className="text-neutral-200 text-justify basis-full flex-none
-            overflow-auto"
+        <p className="text-justify basis-full flex-none overflow-auto prose
+            prose-neutral"
             dangerouslySetInnerHTML={{ __html: contentHtml }} />
     ) : <Loading />;
 }

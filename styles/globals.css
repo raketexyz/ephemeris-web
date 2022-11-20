@@ -12,9 +12,3 @@ a[href] {
 a.no-underline {
     text-decoration-line: none;
 }
-
-blockquote {
-    padding-left: 1rem;
-    margin: .5em 0 .5em 1em;
-    border-left: 3px solid rgb(23 23 23);
-}
