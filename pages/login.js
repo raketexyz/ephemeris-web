@@ -17,7 +17,11 @@ export default function Login({ session }) {
         login(username, password)
             .then(data => {
                 window.localStorage.setItem("token", data.id);
-                router.push("/");
+                if (router.query.return !== undefined) {
+                    router.back();
+                } else {
+                    router.push("/");
+                }
             })
             .catch(error => {
                 setShowForm(true);

@@ -42,7 +42,7 @@ function Header() {
     const session = useSession();
     if (!session) return (
         <div className="text-neutral-200 float-right">
-            <Link href="/login">login</Link>
+            <Link href="/login?return">login</Link>
             <Separator />
             <Link href="/signup">sign&nbsp;up</Link>
         </div>
