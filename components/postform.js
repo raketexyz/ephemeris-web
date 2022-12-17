@@ -32,6 +32,11 @@ export default class PostForm extends React.Component {
 
     render() {
         return <Form onSubmit={this.props.handleSubmit}>
+            <div>
+                You can use markdown and <span className="font-mono">\LaTeX
+                </span> math environments like <span className="font-mono">
+                $E = mc^2$</span> here.
+            </div>
             <Input label="title:">
                 <Text name="title" onChange={this.handleInputChange}
                     value={this.state.title} minLength={1} maxLength={100}
