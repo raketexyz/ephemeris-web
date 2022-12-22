@@ -1,7 +1,6 @@
 module.exports = {
     Form: function({ onSubmit, children }) {
-        const classes = "mx-auto max-w-prose min-w-max text-neutral-300 flex \
-            flex-col";
+        const classes = "mx-auto max-w-prose text-neutral-300 flex flex-col";
         return <form onSubmit={onSubmit} className={classes}>
             {children}
         </form>;
@@ -27,7 +26,8 @@ module.exports = {
         name, value, onChange, autoComplete, disabled, placeholder, maxLength,
         minLength, required,
     }) {
-        const classes = "bg-neutral-800 px-1 outline-none rounded w-full";
+        const classes = "bg-neutral-800 py-1 px-2 outline-none rounded w-full " +
+                        "font-mono";
         return <textarea name={name} value={value} onChange={onChange}
                          autoComplete={autoComplete} disabled={disabled}
                          placeholder={placeholder} maxLength={maxLength}

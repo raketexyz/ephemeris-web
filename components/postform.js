@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Input, Text, TextArea, Button } from '/components/form';
+import { Form, Input, TextArea, Button } from '/components/form';
 
 export default class PostForm extends React.Component {
     constructor(props) {
@@ -32,24 +32,32 @@ export default class PostForm extends React.Component {
 
     render() {
         return <Form onSubmit={this.props.handleSubmit}>
-            <Input label="title:">
-                <Text name="title" onChange={this.handleInputChange}
+            <Input label="title">
+                <TextArea name="title" onChange={this.handleInputChange}
                     value={this.state.title} minLength={1} maxLength={100}
                     required />
             </Input>
-            <Input label="subtitle:">
-                <Text name="subtitle" onChange={this.handleInputChange}
+            <span className="self-end text-sm font-mono">
+                {this.state.title.length}/100 B
+            </span>
+            <Input label="subtitle">
+                <TextArea name="subtitle" onChange={this.handleInputChange}
                     value={this.state.subtitle} maxLength={140} />
             </Input>
-            <div>
-                You can use markdown and <span className="font-mono">\LaTeX
-                </span> math environments like <span className="font-mono">
-                $E = mc^2$</span> here.
-            </div>
-            <Input>
+            <span className="self-end text-sm font-mono">
+                {this.state.subtitle.length}/140 B
+            </span>
+            <Input label={<>
+                body (markdown and <span className="underline decoration-dotted"
+                title="e.g. $E = mc^2$"><span className="font-mono">\LaTeX
+                </span> math environments</span> work here)
+            </>}>
                 <TextArea name="body" onChange={this.handleInputChange}
                     value={this.state.body} />
             </Input>
+            <span className="self-end text-sm font-mono">
+                {this.state.body.length} B
+            </span>
             <Button type="submit">{this.props.cta}</Button>
         </Form>;
     }
